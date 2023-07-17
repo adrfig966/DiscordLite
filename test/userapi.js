@@ -38,6 +38,8 @@ describe('User Registration', () => {
 });
 
 describe('User Login', () => {
+  let jwtToken = '';
+
   it('should return a JWT token on successful login', (done) => {
     chai
       .request(app)
@@ -46,6 +48,7 @@ describe('User Login', () => {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('token');
+        jwtToken = res.body.token;
         done();
       });
   });
@@ -57,6 +60,19 @@ describe('User Login', () => {
       .send({ email: 'user@example.com', password: 'wrongpassword' })
       .end((err, res) => {
         expect(res).to.have.status(401);
+        done();
+      });
+  });
+
+  //Test protected route
+  it('should return user details on successful authentication', (done) => {
+    chai
+      .request(app)
+      .get('/api/users/me')
+      .set('Authorization', `Bearer ${jwtToken}`)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.nested.property('user.email').to.equal('user@example.com');
         done();
       });
   });

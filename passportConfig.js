@@ -48,7 +48,7 @@ module.exports = function(passport) {
         secretOrKey: process.env.JWT_SECRET
     }, async (jwtPayload, done) => {
         try {
-            const user = await User.findById(jwtPayload.id);
+            const user = await User.findById(jwtPayload.user._id);
             if (!user) {
                 return done(null, false);
             }
