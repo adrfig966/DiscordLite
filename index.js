@@ -1,11 +1,22 @@
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
-const connectionstr = require('./connectionstr'); 
+const passport = require('passport');
+const session = require('express-session');
 const app = express();
+
+const databaseurls = {
+  'dev': process.env.DEVDB,
+  'test': process.env.TESTDB,
+};
+
+if(process.env.NODE_ENV) {
+  console.log(`Running in ${process.env.NODE_ENV} mode`);
+}
 
 // Connect to the database
 mongoose
-  .connect(connectionstr, {
+  .connect(process.env.NODE_ENV ? databaseurls[process.env.NODE_ENV] : process.env.DEVDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -22,6 +33,7 @@ const channelRoutes = require('./routes/channelRoutes');
 // ... Require other route files as needed
 
 // Set up middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Define route handlers
@@ -39,3 +51,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;
