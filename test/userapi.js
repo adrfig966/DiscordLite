@@ -7,6 +7,7 @@ const app = require('../index');
 chai.use(chaiHttp);
 const expect = chai.expect;
 
+
 describe('User Registration', () => {
   it('should create a new user and return user details', (done) => {
     chai
@@ -38,8 +39,6 @@ describe('User Registration', () => {
 });
 
 describe('User Login', () => {
-  let jwtToken = '';
-
   it('should return a JWT token on successful login', (done) => {
     chai
       .request(app)
@@ -79,3 +78,5 @@ describe('User Login', () => {
 
   // Write more test cases for different scenarios
 });
+
+require("./serverapi")

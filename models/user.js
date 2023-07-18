@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   avatar: { type: String },
+  servers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Server' }]
 });
 
 userSchema.methods.validPassword = async function (password) {

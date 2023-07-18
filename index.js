@@ -30,6 +30,7 @@ mongoose
 // Require necessary dependencies
 const userRoutes = require('./routes/userRoutes');
 const channelRoutes = require('./routes/channelRoutes');
+const serverRoutes = require('./routes/serverRoutes');
 // ... Require other route files as needed
 
 // Set up middleware
@@ -39,6 +40,7 @@ app.use(express.json());
 // Define route handlers
 app.use('/api/users', userRoutes);
 app.use('/api/channels', channelRoutes);
+app.use('/api/servers', serverRoutes);
 // ... Use other route files as needed
 
 // Define a catch-all route for any unrecognized routes

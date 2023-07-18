@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const serverSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   description: { type: String },
   icon: { type: String },
   type: { type: String, enum: ['public', 'private'], default: 'public' },
