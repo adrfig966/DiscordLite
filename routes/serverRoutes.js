@@ -72,7 +72,7 @@ router.get('/list/:id', passport.authenticate('jwt', { session: false }), (req, 
 });
 
 //Update a server by id. Check if user is the owner of the server
-router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.put('/update/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     Server.findById(req.params.id)
         .then((server) => {
             if (server) {
